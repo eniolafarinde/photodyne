@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { GoogleButton } from './GoogleButton';
 import './AuthForms.css';
+import { useNavigate } from 'react-router-dom';
 
 export function Login() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   
   const { login, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -100,7 +102,7 @@ export function Login() {
         />
         
         <p className="auth-switch">
-          Don't have an account? <a href="/register">Sign up</a>
+            Don't have an account? <span onClick={() => navigate('/register')} className="auth-link">Sign up</span>
         </p>
       </div>
     </div>

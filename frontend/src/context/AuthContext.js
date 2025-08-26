@@ -5,6 +5,7 @@ import {
   signOut as firebaseSignOut 
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -18,17 +19,19 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const navigate = useNavigate();
 
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  }
-
+  // Configure axios defaults and fetch user profile
   useEffect(() => {
-    if (token) {
-      getUserProfile();
-    } else {
-      setLoading(false);
-    }
+    const initializeAuth = async () => {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await getUserProfile();
+      } else {
+        setLoading(false);
+      }
+    };
+    initializeAuth();
   }, [token]);
 
   const getUserProfile = async () => {
@@ -37,7 +40,10 @@ export function AuthProvider({ children }) {
       setCurrentUser(response.data);
     } catch (error) {
       console.error('Failed to get user profile', error);
-      logout();
+      // If the token is invalid, log out the user
+      if (error.response?.status === 401) {
+        logout();
+      }
     } finally {
       setLoading(false);
     }
@@ -45,16 +51,24 @@ export function AuthProvider({ children }) {
 
   const register = async (userData) => {
     try {
+      // Step 1: Register and get a token
       const response = await axios.post(`${API_BASE_URL}/register`, userData);
       const { access_token } = response.data;
       
+      // Step 2: Store the token and update axios headers
       setToken(access_token);
       localStorage.setItem('token', access_token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
+      // Step 3: Fetch the user profile using the new token
       await getUserProfile();
+      
+      navigate('/dashboard');
       return { success: true };
     } catch (error) {
+      console.error('Registration failed:', error);
+      // Clean up if registration fails
+      logout(); 
       return { 
         success: false, 
         error: error.response?.data?.detail || 'Registration failed' 
@@ -76,8 +90,10 @@ export function AuthProvider({ children }) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
       await getUserProfile();
+      navigate('/dashboard');
       return { success: true };
     } catch (error) {
+      console.error('Login failed:', error);
       return { 
         success: false, 
         error: error.response?.data?.detail || 'Login failed' 
@@ -101,8 +117,10 @@ export function AuthProvider({ children }) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
       await getUserProfile();
+      navigate('/dashboard');
       return { success: true };
     } catch (error) {
+      console.error('Google login failed:', error);
       return { 
         success: false, 
         error: error.response?.data?.detail || 'Google login failed' 
@@ -116,6 +134,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
     firebaseSignOut(auth);
+    navigate('/login');
   };
 
   const value = {

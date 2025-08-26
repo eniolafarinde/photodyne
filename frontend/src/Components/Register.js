@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { GoogleButton } from './GoogleButton';
 import './AuthForms.css';
+import { useNavigate } from 'react-router-dom';
 
 export function Register() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export function Register() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   
   const { register, loginWithGoogle } = useAuth();
 
@@ -152,7 +154,7 @@ export function Register() {
         />
         
         <p className="auth-switch">
-          Already have an account? <a href="/login">Log in</a>
+            Already have an account? <span onClick={() => navigate('/login')} className="auth-link">Log in</span>
         </p>
       </div>
     </div>

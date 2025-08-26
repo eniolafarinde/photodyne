@@ -3,31 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Login } from './Components/Login';
 import { Register } from './Components/Register';
+import { Dashboard } from './Components/Dashboard';
 import { ProtectedRoute } from './Components/ProtectedRoute';
 import './App.css';
-
-function Dashboard() {
-  const { currentUser, logout } = useAuth();
-  
-  return (
-    <div className="dashboard">
-      <header>
-        <h1>Color by Numbers</h1>
-        <div className="user-info">
-          <span>Welcome, {currentUser.displayName}</span>
-          <button onClick={logout}>Logout</button>
-        </div>
-      </header>
-      <main>
-        <div className="welcome-message">
-          <h2>Welcome to your coloring adventure!</h2>
-          <p>Select a picture from the gallery below to start coloring.</p>
-          {/* Gallery of coloring pages will go here */}
-        </div>
-      </main>
-    </div>
-  );
-}
 
 function App() {
   return (

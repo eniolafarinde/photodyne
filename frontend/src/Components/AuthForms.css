@@ -144,3 +144,13 @@
 .auth-switch a:hover {
   text-decoration: underline;
 }
+
+.auth-link {
+  color: #4285f4;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-link:hover {
+  color: #3367d6;
+}
