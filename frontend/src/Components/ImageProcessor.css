@@ -1,0 +1,170 @@
+.image-processor {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.upload-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.upload-section h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.upload-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.upload-btn:hover {
+  opacity: 0.9;
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.controls input[type="range"] {
+  width: 200px;
+}
+
+.download-btn {
+  padding: 0.5rem 1rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+  background: #218838;
+}
+
+.processing {
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #666;
+}
+
+.result-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+}
+
+.color-palette {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.color-palette h3 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.colors-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.color-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.color-number {
+  font-weight: bold;
+  min-width: 20px;
+}
+
+.color-hex {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.canvas-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.canvas-container h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.pixel-canvas {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+}
+
+.instructions {
+  color: #666;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .result-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .color-palette {
+    order: 2;
+  }
+  
+  .canvas-container {
+    order: 1;
+  }
+}
